@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username: earnings
+    password: earnings
+    url: jdbc:mariadb://${mariadb_diasnogueira}/earnings
+
+  jpa:
+    show-sql: true
