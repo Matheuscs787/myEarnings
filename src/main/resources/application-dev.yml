@@ -2,7 +2,7 @@ spring:
   datasource:
     username: earnings
     password: earnings
-    url: jdbc:mariadb://${mariadb_diasnogueira}/earnings
+    url: jdbc:mariadb://localhost:3306/earnings
 
   jpa:
     show-sql: true
