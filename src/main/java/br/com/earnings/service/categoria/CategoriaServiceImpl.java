@@ -1,5 +1,6 @@
 package br.com.earnings.service.categoria;
 
+import br.com.earnings.exceptions.NotFoundException;
 import br.com.earnings.model.Categoria;
 import br.com.earnings.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,11 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public Optional<Categoria> findById(Long id) {
-        return categoriaRepository.findById(id);
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if(categoria.isPresent()) {
+            return categoria;
+        }
+        throw new NotFoundException("Categoria não encontrada");
     }
 
     @Override

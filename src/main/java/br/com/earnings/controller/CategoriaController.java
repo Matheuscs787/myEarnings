@@ -35,8 +35,7 @@ public class CategoriaController {
     @GetMapping("/{id}")
     @Operation(description = "Buscar categoria por id")
     public ResponseEntity<Object> findCategoriaById(@PathVariable(value = "id") Long id) {
-        Optional<Categoria> categoria = categoriaService.findById(id);
-        return categoria.<ResponseEntity<Object>>map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(CATEGORIA_NOT_FOUND));
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaService.findById(id));
     }
 
     @PostMapping()
