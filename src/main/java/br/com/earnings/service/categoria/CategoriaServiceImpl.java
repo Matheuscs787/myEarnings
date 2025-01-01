@@ -12,6 +12,7 @@ import java.util.Optional;
 public class CategoriaServiceImpl implements CategoriaService {
 
     final CategoriaRepository categoriaRepository;
+    private static final String CATEGORIA_NOT_FOUND = "Categoria não encontrada!";
 
     public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
@@ -29,7 +30,12 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public void deleteById(Long id) {
-        categoriaRepository.deleteById(id);
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if (categoria.isPresent()) {
+            categoriaRepository.deleteById(id);
+        }else{
+            throw new NotFoundException(CATEGORIA_NOT_FOUND);
+        }
     }
 
     @Override
@@ -38,7 +44,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         if(categoria.isPresent()) {
             return categoria;
         }
-        throw new NotFoundException("Categoria não encontrada");
+        throw new NotFoundException(CATEGORIA_NOT_FOUND);
     }
 
     @Override

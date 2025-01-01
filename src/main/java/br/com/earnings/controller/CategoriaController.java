@@ -17,7 +17,6 @@ import java.util.Optional;
 @Tag(name = "Categoria", description = "Endpoints utilizados para o CRUD de categorias")
 public class CategoriaController {
 
-    private static final String CATEGORIA_NOT_FOUND = "Categoria não encontrada!";
     private static final String CATEGORIA_DELETADA = "Categoria deletada!";
 
     private final CategoriaService categoriaService;
@@ -51,13 +50,8 @@ public class CategoriaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCategoriaById(@PathVariable(value = "id") Long id) {
-        Optional<Categoria> categoria = categoriaService.findById(id);
-        if (categoria.isPresent()) {
-            categoriaService.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(CATEGORIA_DELETADA);
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CATEGORIA_NOT_FOUND);
-        }
+        categoriaService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(CATEGORIA_DELETADA);
     }
 
 }
