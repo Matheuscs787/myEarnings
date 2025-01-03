@@ -9,14 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/categoria")
 @Tag(name = "Categoria", description = "Endpoints utilizados para o CRUD de categorias")
 public class CategoriaController {
-
-    private static final String CATEGORIA_DELETADA = "Categoria deletada!";
 
     private final CategoriaService categoriaService;
 
@@ -32,25 +31,25 @@ public class CategoriaController {
 
     @GetMapping("/{id}")
     @Operation(description = "Buscar categoria por id")
-    public ResponseEntity<Object> findCategoriaById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Optional<Categoria>> findById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.findById(id));
     }
 
     @PostMapping()
     @Operation(description = "Salvar categoria")
-    public ResponseEntity<Object> saveCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.save(categoria));
     }
 
     @PutMapping
-    public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> update(@RequestBody Categoria categoria) {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.update(categoria));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCategoriaById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Long id) {
         categoriaService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(CATEGORIA_DELETADA);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

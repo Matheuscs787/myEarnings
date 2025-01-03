@@ -1,13 +1,17 @@
 package br.com.earnings.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties("ativos")
 @Table(name = "tb_categoria")
 public class Categoria {
 
@@ -19,5 +23,7 @@ public class Categoria {
     private String nome;
     @Column(length = 5, nullable = false)
     private String sigla;
+    @OneToMany(mappedBy = "categoria")
+    private List<Ativo> ativos;
 
 }
